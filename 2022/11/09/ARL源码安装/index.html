@@ -1,506 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- title -->
-
-
-    
-
-<!-- keywords -->
-
-
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="xjqz">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="xjqz">
-    
-        <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
-    
-    <meta name="description" content="">
-    <meta name="description" content="ARL源码安装环境要求：Centos7 2H4G 带宽尽量高 先安装完BT面板，在BT面板中安装好LNMP，或者NGINX即可 正式开始：修改NGINX配置文件，&#x2F;www&#x2F;server&#x2F;nginx&#x2F;conf&#x2F;nginx.conf，添加日志格式支持： 123log_format		main	&amp;#x27;$remote_addr - $remote_u">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ARL源码安装">
-<meta property="og:url" content="https://xjqz.top/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/index.html">
-<meta property="og:site_name" content="xjqz&#39;s live">
-<meta property="og:description" content="ARL源码安装环境要求：Centos7 2H4G 带宽尽量高 先安装完BT面板，在BT面板中安装好LNMP，或者NGINX即可 正式开始：修改NGINX配置文件，&#x2F;www&#x2F;server&#x2F;nginx&#x2F;conf&#x2F;nginx.conf，添加日志格式支持： 123log_format		main	&amp;#x27;$remote_addr - $remote_u">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-11-09T13:02:27.000Z">
-<meta property="article:modified_time" content="2022-11-09T13:06:45.160Z">
-<meta property="article:author" content="xjqz">
-<meta property="article:tag" content="Web,ARL,灯塔">
-<meta name="twitter:card" content="summary">
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="icon" href="/assets/favicon.ico">
-    
-    <title>ARL源码安装 · xjqz</title>
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-    (function (w) {
-        'use strict'
-        // rel=preload support test
-        if (!w.loadCSS) {
-            w.loadCSS = function () {}
-        }
-        // define on the loadCSS obj
-        var rp = (loadCSS.relpreload = {})
-        // rel=preload feature support test
-        // runs once and returns a function for compat purposes
-        rp.support = (function () {
-            var ret
-            try {
-                ret = w.document.createElement('link').relList.supports('preload')
-            } catch (e) {
-                ret = false
-            }
-            return function () {
-                return ret
-            }
-        })()
 
-        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-        // then change that media back to its intended value on load
-        rp.bindMediaToggle = function (link) {
-            // remember existing media attr for ultimate state, or default to 'all'
-            var finalMedia = link.media || 'all'
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
 
-            function enableStylesheet() {
-                link.media = finalMedia
-            }
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
 
-            // bind load handlers to enable media
-            if (link.addEventListener) {
-                link.addEventListener('load', enableStylesheet)
-            } else if (link.attachEvent) {
-                link.attachEvent('onload', enableStylesheet)
-            }
+  
+  <title>ARL源码安装</title>
+  
+  <link rel="canonical" href="https://xjqz.top/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/">
+  
+  <meta name="description" content="ARL源码安装环境要求：Centos7 2H4G 带宽尽量高 先安装完BT面板，在BT面板中安装好LNMP，或者NGINX即可 正式开始：修改NGINX配置文件，&amp;#x2F;www&amp;#x2F;server&amp;#x2F;nginx&amp;#x2F;conf&amp;#x2F;nginx.conf，添加日志格式支持： ">
+  
+  
+  <meta name="author" content="xjqz">
+  
+  
+  
+  <meta property="og:site_name" content="xjqz&#39;s live" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="ARL源码安装" />
+  
+  <meta property="og:description" content="ARL源码安装环境要求：Centos7 2H4G 带宽尽量高 先安装完BT面板，在BT面板中安装好LNMP，或者NGINX即可 正式开始：修改NGINX配置文件，&amp;#x2F;www&amp;#x2F;server&amp;#x2F;nginx&amp;#x2F;conf&amp;#x2F;nginx.conf，添加日志格式支持： ">
+  
+  <meta property="og:url" content="https://xjqz.top/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/" />
 
-            // Set rel and non-applicable media type to start an async request
-            // note: timeout allows this to happen async to let rendering continue in IE
-            setTimeout(function () {
-                link.rel = 'stylesheet'
-                link.media = 'only x'
-            })
-            // also enable media after 3 seconds,
-            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-            setTimeout(enableStylesheet, 3000)
-        }
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ARL源码安装">
+  
+  <meta name="twitter:description" content="ARL源码安装环境要求：Centos7 2H4G 带宽尽量高 先安装完BT面板，在BT面板中安装好LNMP，或者NGINX即可 正式开始：修改NGINX配置文件，&amp;#x2F;www&amp;#x2F;server&amp;#x2F;nginx&amp;#x2F;conf&amp;#x2F;nginx.conf，添加日志格式支持： ">
+  
+  
+  
+  
+  <meta name="twitter:url" content="https://xjqz.top/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/" />
 
-        // loop through link elements in DOM
-        rp.poly = function () {
-            // double check this to prevent external calls from running
-            if (rp.support()) {
-                return
-            }
-            var links = w.document.getElementsByTagName('link')
-            for (var i = 0; i < links.length; i++) {
-                var link = links[i]
-                // qualify links to those with rel=preload and as=style attrs
-                if (
-                    link.rel === 'preload' &&
-                    link.getAttribute('as') === 'style' &&
-                    !link.getAttribute('data-loadcss')
-                ) {
-                    // prevent rerunning on link
-                    link.setAttribute('data-loadcss', true)
-                    // bind listeners to toggle media back
-                    rp.bindMediaToggle(link)
-                }
-            }
-        }
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        // if unsupported, run the polyfill
-        if (!rp.support()) {
-            // run once at least
-            rp.poly()
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
 
-            // rerun poly on an interval until onload
-            var run = w.setInterval(rp.poly, 500)
-            if (w.addEventListener) {
-                w.addEventListener('load', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            } else if (w.attachEvent) {
-                w.attachEvent('onload', function () {
-                    rp.poly()
-                    w.clearInterval(run)
-                })
-            }
-        }
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
 
-        // commonjs
-        if (typeof exports !== 'undefined') {
-            exports.loadCSS = loadCSS
-        } else {
-            w.loadCSS = loadCSS
-        }
-    })(typeof global !== 'undefined' ? global : this)
-</script>
+  
+<link rel="stylesheet" href="/css/skeleton.css">
 
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/font/Oswald-Regular.ttf");
-    }
+  
+<link rel="stylesheet" href="/css/custom.css">
 
-    body {
-        margin: 0;
-    }
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
 
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
 
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
 
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
+  
 
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
 </style>
 
-    <link rel="preload" href="/css/style.css?v=20211217" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/css/dark.css?v=20211217" as="style">
-    <link rel="stylesheet" href="/css/dark.css">
-    <link rel="stylesheet" href="/css/mobile.css?v=20211217" media="(max-width: 960px)">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/scripts/main.js?v=20211217" as="script">
-    <link rel="preload" href="/scripts/dark.js?v=20211217" as="script">
-    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
-    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
-    <!-- algolia -->
-    
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
 <meta name="generator" content="Hexo 6.0.0"></head>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ == undefined) {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js" />')
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
         }
-    </script>
-    
-        <body class="post-body">
-    
-        <!-- header -->
-        <header class="header header-mobile">
-    <!-- top read progress line -->
-    <div class="header-element">
-        <div class="read-progress"></div>
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      Hi Folks.
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/archives" class="ml">Works</a>
+          
+        
+          
+          <a href="/about" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xjqzmeng@gmail.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
     </div>
-    <!-- sidebar menu button -->
-    <div class="header-element">
-        
-            <div class="header-sidebar-menu">
-        
-            
-                <div style="padding-left: 1px;">&#xe775;</div>
-            
-        </div>
-    </div>
-    <!-- header actions -->
-    <div class="header-actions">
-        <!-- theme mode switch button -->
-        <span class="header-theme-btn header-element">
-            <i class="fas fa-adjust"></i>
-        </span>
-        <!-- back to home page text -->
-        <span class="home-link header-element">
-            <a href=/>xjqz's live.</a>
-        </span>
-    </div>
-    <!-- toggle banner for post layout -->
-    
-        
-            <div class="banner">
-        
-            <div class="blog-title header-element">
-                <a href="/">xjqz&#39;s live.</a>
-            </div>
-            <div class="post-title header-element">
-                <a href="#" class="post-name">ARL源码安装</a>
-            </div>
-        </div>
-    
-</header>
-
-        <!-- fixed footer -->
-        <footer class="footer-fixed">
-    <!-- back to top button -->
-    <div class="footer-fixed-element">
-        
-            <div class="back-top back-top-hidden">
-        
-        
-            <div>&#xe639;</div>
-        
-        </div>
-    </div>
-</footer>
-
-        <!-- wrapper -->
-        <div class="wrapper">
-            <div class="site-intro" style="
-
-
-
-
-
-
-
-    height:50vh;
-
-">
-    
-    <!-- 主页  -->
-    
-        
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-                ARL源码安装
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-                
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页 meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Web,ARL,灯塔">Web,ARL,灯塔</a>
-    
+    <hr style="margin-bottom: 2.6rem">
+  </div>
 </div>
 
-                
-                
-                    <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">854</span>Reading time: <span class="post-count reading-time">4 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <!-- 撰写日期 -->
-                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2022/11/09</span>
-                    <!-- busuanzi -->
-                    
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
-                    <!-- 文章分享 -->
-                    <span class="share-wrapper">
-                        <span class="iconfont-archer share-icon">&#xe71d;</span>
-                        <span class="share-text">Share</span>
-                        <ul class="share-list">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
-        
-    </div>
-</div>
+        <div class="trans">
+            <h2>ARL源码安装</h2>
 
-            <script>
-  // get user agent
-  function getBrowserVersions() {
-    var u = window.navigator.userAgent
-    return {
-      userAgent: u,
-      trident: u.indexOf('Trident') > -1, //IE内核
-      presto: u.indexOf('Presto') > -1, //opera内核
-      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-      iPad: u.indexOf('iPad') > -1, //是否为iPad
-      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
-    }
-  }
-  var browser = {
-    versions: getBrowserVersions(),
-  }
-  console.log('userAgent: ' + browser.versions.userAgent)
-
-  // callback
-  function fontLoaded() {
-    console.log('font loaded')
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document
-        .getElementsByClassName('intro-title')[0]
-        .classList.add('intro-fade-in')
-      document
-        .getElementsByClassName('intro-subtitle')[0]
-        .classList.add('intro-fade-in')
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in')
-      }
-    }
-  }
-
-  // UC不支持跨域，所以直接显示
-  function asyncCb() {
-    if (browser.versions.uc) {
-      console.log('UCBrowser')
-      fontLoaded()
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular'],
-        },
-        loading: function () {
-          // 所有字体开始加载
-          // console.log('font loading');
-        },
-        active: function () {
-          // 所有字体已渲染
-          fontLoaded()
-        },
-        inactive: function () {
-          // 字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout')
-          fontLoaded()
-        },
-        timeout: 5000, // Set the timeout to two seconds
-      })
-    }
-  }
-
-  function asyncErr() {
-    console.warn('script load from CDN failed, will load local script')
-  }
-
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0]
-    o.src = u
-    if (cb) {
-      o.addEventListener(
-        'load',
-        function (e) {
-          cb(null, e)
-        },
-        false
-      )
-    }
-    if (err) {
-      o.addEventListener(
-        'error',
-        function (e) {
-          err(null, e)
-        },
-        false
-      )
-    }
-    s.parentNode.insertBefore(o, s)
-  }
-
-  var asyncLoadWithFallBack = function (arr, success, reject) {
-    var currReject = function () {
-      reject()
-      arr.shift()
-      if (arr.length) async(arr[0], success, currReject)
-    }
-
-    async(arr[0], success, currReject)
-  }
-
-  asyncLoadWithFallBack(
-    [
-      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
-      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
-      "/lib/webfontloader.min.js",
-    ],
-    asyncCb,
-    asyncErr
-  )
-</script>
-
-            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-            <div class="container container-unloaded">
-                <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="ARL源码安装"><a href="#ARL源码安装" class="headerlink" title="ARL源码安装"></a>ARL源码安装</h1><h3 id="环境要求："><a href="#环境要求：" class="headerlink" title="环境要求："></a>环境要求：</h3><p>Centos7 2H4G 带宽尽量高</p>
+  <h1 id="ARL源码安装"><a href="#ARL源码安装" class="headerlink" title="ARL源码安装"></a>ARL源码安装</h1><h3 id="环境要求："><a href="#环境要求：" class="headerlink" title="环境要求："></a>环境要求：</h3><p>Centos7 2H4G 带宽尽量高</p>
 <p>先安装完BT面板，在BT面板中安装好LNMP，或者NGINX即可</p>
 <h3 id="正式开始："><a href="#正式开始：" class="headerlink" title="正式开始："></a>正式开始：</h3><p>修改NGINX配置文件，&#x2F;www&#x2F;server&#x2F;nginx&#x2F;conf&#x2F;nginx.conf，添加日志格式支持：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">log_format		main	&#x27;$remote_addr - $remote_user [$time_local] $request &#x27;</span><br><span class="line">					&#x27;&quot;$status&quot; $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">					&#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot; &quot;$gzip_ratio&quot;&#x27;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">log_format		main	&#39;$remote_addr - $remote_user [$time_local] $request &#39;
+					&#39;&quot;$status&quot; $body_bytes_sent &quot;$http_referer&quot; &#39;
+					&#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot; &quot;$gzip_ratio&quot;&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>同时创建目录以及新建日志文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/log/nginx</span><br><span class="line"></span><br><span class="line">touch /var/log/nginx/arl.access.log</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">mkdir -p &#x2F;var&#x2F;log&#x2F;nginx
+
+touch &#x2F;var&#x2F;log&#x2F;nginx&#x2F;arl.access.log<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>使用这个安装脚本，然后手动下载ARL和ARL-NPoC，放到&#x2F;opt目录下，记得改名：</p>
 <p>ARL：<a target="_blank" rel="noopener" href="https://github.91chi.fun//https://github.com/TophantTechnology/ARL/archive/refs/heads/master.zip">https://github.91chi.fun//https://github.com/TophantTechnology/ARL/archive/refs/heads/master.zip</a></p>
@@ -512,7 +219,154 @@
 <p>mkdir -p &#x2F;data&#x2F;GeoLite2</p>
 <p><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/1c3z/arl_files/master/GeoLite2-City.mmdb">https://raw.githubusercontent.com/1c3z/arl_files/master/GeoLite2-City.mmdb</a></p>
 <p><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/1c3z/arl_files/master/GeoLite2-ASN.mmdb">https://raw.githubusercontent.com/1c3z/arl_files/master/GeoLite2-ASN.mmdb</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;cd /opt/&quot;</span><br><span class="line"></span><br><span class="line">mkdir -p /opt/</span><br><span class="line">cd /opt/</span><br><span class="line"></span><br><span class="line">tee /etc/yum.repos.d/mongodb-org-4.0.repo &lt;&lt;&quot;EOF&quot;</span><br><span class="line">[mongodb-org-4.0]</span><br><span class="line">name=MongoDB Repository</span><br><span class="line">baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.0/x86_64/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo &quot;install dependencies ...&quot;</span><br><span class="line">yum install epel-release -y</span><br><span class="line">yum install python36 mongodb-org-server mongodb-org-shell rabbitmq-server python36-devel gcc-c++ git \</span><br><span class="line"> nginx  fontconfig wqy-microhei-fonts -y</span><br><span class="line"></span><br><span class="line">if [ ! -f /usr/bin/python36 ]; then</span><br><span class="line">  echo &quot;link python36&quot;</span><br><span class="line">  ln -s /usr/bin/python36 /usr/bin/python3.6</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -f /usr/local/bin/pip3.6 ]; then</span><br><span class="line">  echo &quot;install  pip3.6&quot;</span><br><span class="line">  python3.6 -m ensurepip --default-pip</span><br><span class="line">  pip3.6 install --upgrade pip</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">rpm -vhU https://nmap.org/dist/nmap-7.91-1.x86_64.rpm</span><br><span class="line"></span><br><span class="line">echo &quot;start services ...&quot;</span><br><span class="line">systemctl enable mongod</span><br><span class="line">systemctl start mongod</span><br><span class="line">systemctl enable rabbitmq-server</span><br><span class="line">systemctl start rabbitmq-server</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ ! -d ARL ]; then</span><br><span class="line">  echo &quot;git clone ARL proj&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -d &quot;ARL-NPoC&quot; ]; then</span><br><span class="line">  echo &quot;git clone ARL-NPoC proj&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cd ARL-NPoC</span><br><span class="line">echo &quot;install poc requirements ...&quot;</span><br><span class="line">pip3.6 install -r requirements.txt</span><br><span class="line">pip3.6 install -e .</span><br><span class="line">cd ../</span><br><span class="line"></span><br><span class="line">if [ ! -f /usr/local/bin/ncrack ]; then</span><br><span class="line">  echo &quot;Download ncrack ...&quot;</span><br><span class="line">  chmod +x /usr/local/bin/ncrack</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/local/share/ncrack</span><br><span class="line">if [ ! -f /usr/local/share/ncrack/ncrack-services ]; then</span><br><span class="line">  echo &quot;Download ncrack-services ...&quot;</span><br><span class="line">  wget https://github.com/1c3z/arl_files/raw/master/ncrack-services -O /usr/local/share/ncrack/ncrack-services</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">mkdir -p /data/GeoLite2</span><br><span class="line">if [ ! -f /data/GeoLite2/GeoLite2-ASN.mmdb ]; then</span><br><span class="line">  echo &quot;download GeoLite2-ASN.mmdb ...&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -f /data/GeoLite2/GeoLite2-City.mmdb ]; then</span><br><span class="line">  echo &quot;download GeoLite2-City.mmdb ...&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cd ARL</span><br><span class="line"></span><br><span class="line">if [ ! -f rabbitmq_user ]; then</span><br><span class="line">  echo &quot;add rabbitmq user&quot;</span><br><span class="line">  rabbitmqctl add_user arl arlpassword</span><br><span class="line">  rabbitmqctl add_vhost arlv2host</span><br><span class="line">  rabbitmqctl set_user_tags arl arltag</span><br><span class="line">  rabbitmqctl set_permissions -p arlv2host arl &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br><span class="line">  echo &quot;init arl user&quot;</span><br><span class="line">  mongo 127.0.0.1:27017/arl docker/mongo-init.js</span><br><span class="line">  touch rabbitmq_user</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;install arl requirements ...&quot;</span><br><span class="line">pip3.6 install -r requirements.txt</span><br><span class="line">if [ ! -f app/config.yaml ]; then</span><br><span class="line">  echo &quot;create config.yaml&quot;</span><br><span class="line">  cp app/config.yaml.example  app/config.yaml</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -f /usr/bin/phantomjs ]; then</span><br><span class="line">  echo &quot;install phantomjs&quot;</span><br><span class="line">  ln -s `pwd`/app/tools/phantomjs  /usr/bin/phantomjs</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -f /etc/nginx/conf.d/arl.conf ]; then</span><br><span class="line">  echo &quot;copy arl.conf&quot;</span><br><span class="line">  cp misc/arl.conf /www/server/panel/vhost/nginx</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ ! -f /etc/ssl/certs/dhparam.pem ]; then</span><br><span class="line">  echo &quot;download dhparam.pem&quot;</span><br><span class="line">  curl https://ssl-config.mozilla.org/ffdhe2048.txt &gt; /etc/ssl/certs/dhparam.pem</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;gen cert ...&quot;</span><br><span class="line">./docker/worker/gen_crt.sh</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cd /opt/ARL/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ ! -f /etc/systemd/system/arl-web.service ]; then</span><br><span class="line">  echo  &quot;copy arl-web.service&quot;</span><br><span class="line">  cp misc/arl-web.service /etc/systemd/system/</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -f /etc/systemd/system/arl-worker.service ]; then</span><br><span class="line">  echo  &quot;copy arl-worker.service&quot;</span><br><span class="line">  cp misc/arl-worker.service /etc/systemd/system/</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -f /etc/systemd/system/arl-scheduler.service ]; then</span><br><span class="line">  echo  &quot;copy arl-scheduler.service&quot;</span><br><span class="line">  cp misc/arl-scheduler.service /etc/systemd/system/</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;start arl services ...&quot;</span><br><span class="line">systemctl enable arl-web</span><br><span class="line">systemctl start arl-web</span><br><span class="line">systemctl enable arl-worker</span><br><span class="line">systemctl start arl-worker</span><br><span class="line">systemctl enable arl-scheduler</span><br><span class="line">systemctl start arl-scheduler</span><br><span class="line">systemctl enable nginx</span><br><span class="line">systemctl start nginx</span><br><span class="line"></span><br><span class="line">systemctl status arl-web</span><br><span class="line">systemctl status arl-worker</span><br><span class="line">systemctl status arl-scheduler</span><br><span class="line"></span><br><span class="line">echo &quot;install done&quot;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">echo &quot;cd &#x2F;opt&#x2F;&quot;
+
+mkdir -p &#x2F;opt&#x2F;
+cd &#x2F;opt&#x2F;
+
+tee &#x2F;etc&#x2F;yum.repos.d&#x2F;mongodb-org-4.0.repo &lt;&lt;&quot;EOF&quot;
+[mongodb-org-4.0]
+name&#x3D;MongoDB Repository
+baseurl&#x3D;https:&#x2F;&#x2F;repo.mongodb.org&#x2F;yum&#x2F;redhat&#x2F;$releasever&#x2F;mongodb-org&#x2F;4.0&#x2F;x86_64&#x2F;
+gpgcheck&#x3D;1
+enabled&#x3D;1
+gpgkey&#x3D;https:&#x2F;&#x2F;www.mongodb.org&#x2F;static&#x2F;pgp&#x2F;server-4.0.asc
+EOF
+
+echo &quot;install dependencies ...&quot;
+yum install epel-release -y
+yum install python36 mongodb-org-server mongodb-org-shell rabbitmq-server python36-devel gcc-c++ git \
+ nginx  fontconfig wqy-microhei-fonts -y
+
+if [ ! -f &#x2F;usr&#x2F;bin&#x2F;python36 ]; then
+  echo &quot;link python36&quot;
+  ln -s &#x2F;usr&#x2F;bin&#x2F;python36 &#x2F;usr&#x2F;bin&#x2F;python3.6
+fi
+
+if [ ! -f &#x2F;usr&#x2F;local&#x2F;bin&#x2F;pip3.6 ]; then
+  echo &quot;install  pip3.6&quot;
+  python3.6 -m ensurepip --default-pip
+  pip3.6 install --upgrade pip
+fi
+
+rpm -vhU https:&#x2F;&#x2F;nmap.org&#x2F;dist&#x2F;nmap-7.91-1.x86_64.rpm
+
+echo &quot;start services ...&quot;
+systemctl enable mongod
+systemctl start mongod
+systemctl enable rabbitmq-server
+systemctl start rabbitmq-server
+
+
+if [ ! -d ARL ]; then
+  echo &quot;git clone ARL proj&quot;
+fi
+
+if [ ! -d &quot;ARL-NPoC&quot; ]; then
+  echo &quot;git clone ARL-NPoC proj&quot;
+fi
+
+cd ARL-NPoC
+echo &quot;install poc requirements ...&quot;
+pip3.6 install -r requirements.txt
+pip3.6 install -e .
+cd ..&#x2F;
+
+if [ ! -f &#x2F;usr&#x2F;local&#x2F;bin&#x2F;ncrack ]; then
+  echo &quot;Download ncrack ...&quot;
+  chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;ncrack
+fi
+
+mkdir -p &#x2F;usr&#x2F;local&#x2F;share&#x2F;ncrack
+if [ ! -f &#x2F;usr&#x2F;local&#x2F;share&#x2F;ncrack&#x2F;ncrack-services ]; then
+  echo &quot;Download ncrack-services ...&quot;
+  wget https:&#x2F;&#x2F;github.com&#x2F;1c3z&#x2F;arl_files&#x2F;raw&#x2F;master&#x2F;ncrack-services -O &#x2F;usr&#x2F;local&#x2F;share&#x2F;ncrack&#x2F;ncrack-services
+fi
+
+mkdir -p &#x2F;data&#x2F;GeoLite2
+if [ ! -f &#x2F;data&#x2F;GeoLite2&#x2F;GeoLite2-ASN.mmdb ]; then
+  echo &quot;download GeoLite2-ASN.mmdb ...&quot;
+fi
+
+if [ ! -f &#x2F;data&#x2F;GeoLite2&#x2F;GeoLite2-City.mmdb ]; then
+  echo &quot;download GeoLite2-City.mmdb ...&quot;
+fi
+
+cd ARL
+
+if [ ! -f rabbitmq_user ]; then
+  echo &quot;add rabbitmq user&quot;
+  rabbitmqctl add_user arl arlpassword
+  rabbitmqctl add_vhost arlv2host
+  rabbitmqctl set_user_tags arl arltag
+  rabbitmqctl set_permissions -p arlv2host arl &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;
+  echo &quot;init arl user&quot;
+  mongo 127.0.0.1:27017&#x2F;arl docker&#x2F;mongo-init.js
+  touch rabbitmq_user
+fi
+
+echo &quot;install arl requirements ...&quot;
+pip3.6 install -r requirements.txt
+if [ ! -f app&#x2F;config.yaml ]; then
+  echo &quot;create config.yaml&quot;
+  cp app&#x2F;config.yaml.example  app&#x2F;config.yaml
+fi
+
+if [ ! -f &#x2F;usr&#x2F;bin&#x2F;phantomjs ]; then
+  echo &quot;install phantomjs&quot;
+  ln -s &#96;pwd&#96;&#x2F;app&#x2F;tools&#x2F;phantomjs  &#x2F;usr&#x2F;bin&#x2F;phantomjs
+fi
+
+if [ ! -f &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;arl.conf ]; then
+  echo &quot;copy arl.conf&quot;
+  cp misc&#x2F;arl.conf &#x2F;www&#x2F;server&#x2F;panel&#x2F;vhost&#x2F;nginx
+fi
+
+
+
+if [ ! -f &#x2F;etc&#x2F;ssl&#x2F;certs&#x2F;dhparam.pem ]; then
+  echo &quot;download dhparam.pem&quot;
+  curl https:&#x2F;&#x2F;ssl-config.mozilla.org&#x2F;ffdhe2048.txt &gt; &#x2F;etc&#x2F;ssl&#x2F;certs&#x2F;dhparam.pem
+fi
+
+
+echo &quot;gen cert ...&quot;
+.&#x2F;docker&#x2F;worker&#x2F;gen_crt.sh
+
+
+cd &#x2F;opt&#x2F;ARL&#x2F;
+
+
+if [ ! -f &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;arl-web.service ]; then
+  echo  &quot;copy arl-web.service&quot;
+  cp misc&#x2F;arl-web.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
+fi
+
+if [ ! -f &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;arl-worker.service ]; then
+  echo  &quot;copy arl-worker.service&quot;
+  cp misc&#x2F;arl-worker.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
+fi
+
+if [ ! -f &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;arl-scheduler.service ]; then
+  echo  &quot;copy arl-scheduler.service&quot;
+  cp misc&#x2F;arl-scheduler.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
+fi
+
+echo &quot;start arl services ...&quot;
+systemctl enable arl-web
+systemctl start arl-web
+systemctl enable arl-worker
+systemctl start arl-worker
+systemctl enable arl-scheduler
+systemctl start arl-scheduler
+systemctl enable nginx
+systemctl start nginx
+
+systemctl status arl-web
+systemctl status arl-worker
+systemctl status arl-scheduler
+
+echo &quot;install done&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -522,343 +376,68 @@
 <li>Written in 2022.03.30(7th floor, Information Technology Building)</li>
 </ul>
 
-    </article>
-    <!-- license -->
-    
-        <div class="license-wrapper">
-            <p>Author：<a href="https://xjqz.top">xjqz</a>
-            <p>Link：<a href="https://xjqz.top/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/">https://xjqz.top/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/</a>
-            <p>Publish date：<a href="https://xjqz.top/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/">November 9th 2022, 9:02:27 pm</a>
-            <p>Update date：<a href="https://xjqz.top/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/">November 9th 2022, 9:06:45 pm</a>
-            <p>License：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
-        </div>
-    
-    <!-- paginator -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2022/11/09/%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="常见漏洞复现">
-                    <div class="nextTitle">常见漏洞复现</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2022/04/05/Android%E6%8A%93%E5%8C%85%E5%BF%83%E5%BE%97/" title="Android抓包心得">
-                    <div class="prevTitle">Android抓包心得</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- comment -->
-    
-        <div class="post-comment">
-            <!-- 来必力 City 版安装代码 -->
-
-
-            
-
-            
-
-            
-
-            <!-- utteranc评论 -->
-
-
-            <!-- partial('_partial/comment/changyan') -->
-            <!--PC版-->
-
-
-            
-            
-
-            
-
-        </div>
-    
-    <!-- timeliness note -->
-    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
-    
-    <!-- Mathjax -->
-    
-</main>
-
-                <!-- profile -->
-                
-            </div>
-            <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-        <div class="social">
-            
-    
-        
-            
-                <a href="mailto:1875982626@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/xjqz" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                    
-                    <img class="profile-qr" src="/assets/example_qr.png" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
+  <p><a class="classtest-link" href="/tags/Web-ARL-%E7%81%AF%E5%A1%94/" rel="tag">Web,ARL,灯塔</a> — Nov 9, 2022</p>
+  
 
 
         </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
-    </div>
-    <!-- website approve for Chinese user -->
-    
-    <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
-        </div>
-    	
-</footer>
-
-        </div>
-        <!-- toc -->
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
         
-            <div class="toc-wrapper toc-wrapper-loding" style=
-
-
-
-
-
-
-
-    top:50vh;
-
->
-                <div class="toc-catalog">
-                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-                </div>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">ARL源码安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82%EF%BC%9A"><span class="toc-number">1.0.1.</span> <span class="toc-text">环境要求：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E5%BC%80%E5%A7%8B%EF%BC%9A"><span class="toc-number">1.0.2.</span> <span class="toc-text">正式开始：</span></a></li></ol></li></ol></li></ol>
-            </div>
-        
-        <!-- sidebar -->
-        <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-        <div class="sidebar-panel-archives">
-    <!-- 在 ejs 中将 archive 按照时间排序 -->
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 4
-        </div>
-        <!-- search  -->
+        at <a href="https://en.wikipedia.org/wiki/Earth" target="_blank" rel="noreferrer">Earth</a>.</p>
         
     </div>
-    
-    <div class="post-archive">
-    
-        
-            
-            
-            <div class="archive-year"> 2022 </div>
-            <ul class="year-list">
-            
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/09</span>
-            <a class="archive-post-title" href="/2022/11/09/ARL%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85/">ARL源码安装</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/09</span>
-            <a class="archive-post-title" href="/2022/11/09/%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">常见漏洞复现</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/05</span>
-            <a class="archive-post-title" href="/2022/04/05/Android%E6%8A%93%E5%8C%85%E5%BF%83%E5%BE%97/">Android抓包心得</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span>
-            <a class="archive-post-title" href="/2022/03/05/Web%E5%85%A5%E9%97%A8/">Web入门</a>
-        </li>
-    
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+      <a class="ml-0 footer-link icon" href="https://github.com/xjqz" target="_blank" style="text-decoration: none" rel="noreferrer" aria-label="GitHub">
+        <svg class="github svg-hov" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+      
+
+      
+
+      
+
+      
+
+      
+
     </div>
+  
 </div>
 
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-        
-            <span class="sidebar-tag-name" data-tags="Android,抓包">
-                <span class="iconfont-archer">&#xe606;</span>
-                Android,抓包
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Web">
-                <span class="iconfont-archer">&#xe606;</span>
-                Web
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="Web,ARL,灯塔">
-                <span class="iconfont-archer">&#xe606;</span>
-                Web,ARL,灯塔
-            </span>
-        
-            <span class="sidebar-tag-name" data-tags="复现,漏洞">
-                <span class="iconfont-archer">&#xe606;</span>
-                复现,漏洞
-            </span>
-        
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
-    </div> 
-    <div class="sidebar-tags-list"></div>
-</div>
-
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-    </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
+      </div>
 
     </div>
-</div>
 
-        <!-- site-meta -->
-        <script>
-    var siteMetaRoot = "/"
-    if (siteMetaRoot === "undefined") {
-        siteMetaRoot = '/'
-    }
-    var siteMeta = {
-        url: "https://xjqz.top",
-        root: siteMetaRoot,
-        author: "xjqz"
-    }
-</script>
+  </div>
+  <script src="/js/nanobar.min.js"></script>
 
-        <!-- import experimental options here -->
-        <!-- Custom Font -->
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
 
+</body>
 
-        <!-- main func -->
-        <script src="/scripts/main.js?v=20211217"></script>
-        <!-- dark mode -->
-        <script src="/scripts/dark.js?v=20211217"></script>
-        <!-- fancybox -->
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
-        <!-- algolia -->
-        
-        <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-        
-        <!-- CNZZ -->
-        
-        <!-- async load share.js -->
-        
-            <script src="/scripts/share.js?v=20211217" async></script>
-        
-        <!-- mermaid -->
-        
-    </body>
 </html>
